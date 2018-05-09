@@ -1,0 +1,1 @@
+provides: pd-redis-spring-boot-autoconfigure,pd-redis-spring-boot-annotation
