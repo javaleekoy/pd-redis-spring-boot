@@ -11,6 +11,7 @@
         <module>pd-redis-spring-boot-parent</module>
         <module>pd-redis-spring-boot-autoconfigure</module>
         <module>pd-redis-spring-boot-starter</module>
+        <module>pd-redis-spring-boot-annotation</module>
     </modules>
 
     <packaging>pom</packaging>

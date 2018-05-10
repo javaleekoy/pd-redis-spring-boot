@@ -1,9 +1,9 @@
 package com.peramdy.cache.util;
 
 
-import com.peramdy.cache.autoconfigure.JedisProperties;
 import com.peramdy.cache.builder.JedisBuilder;
 import com.peramdy.cache.builder.JedisClusterBuilder;
+import com.peramdy.cache.config.JedisConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
@@ -18,7 +18,7 @@ import redis.clients.jedis.JedisPoolConfig;
 public class JedisUtils {
 
     @Autowired
-    private JedisProperties jedisProperties;
+    private JedisConfig redisConfig;
 
     /**
      * create cluster
@@ -29,13 +29,13 @@ public class JedisUtils {
     public JedisCluster createJedisCluster() throws Exception {
         JedisClusterBuilder jedisClusterBuilder = JedisClusterBuilder.getInstance();
         JedisPoolConfig poolConfig = new JedisPoolConfig();
-        poolConfig.setMaxTotal(jedisProperties.getMaxTotal());
-        poolConfig.setMinIdle(jedisProperties.getMinIdle());
-        poolConfig.setMaxIdle(jedisProperties.getMaxIdle());
-        jedisClusterBuilder.setAddressConfigs(jedisProperties.getAddresses());
+        poolConfig.setMaxTotal(redisConfig.getMaxTotal());
+        poolConfig.setMinIdle(redisConfig.getMinIdle());
+        poolConfig.setMaxIdle(redisConfig.getMaxIdle());
+        jedisClusterBuilder.setAddressConfigs(redisConfig.getAddresses());
         jedisClusterBuilder.setGenericObjectPoolConfig(poolConfig);
-        jedisClusterBuilder.setMaxTotal(jedisProperties.getMaxTotal());
-        jedisClusterBuilder.setTimeout(jedisProperties.getTimeout());
+        jedisClusterBuilder.setMaxTotal(redisConfig.getMaxTotal());
+        jedisClusterBuilder.setTimeout(redisConfig.getTimeout());
         return jedisClusterBuilder.build();
     }
 
@@ -49,9 +49,9 @@ public class JedisUtils {
         Jedis jedis = null;
         try {
             JedisBuilder jedisBuilder = JedisBuilder.getInstance();
-            jedisBuilder.setHost(jedisProperties.getIp());
-            jedisBuilder.setPort(jedisProperties.getPort());
-            jedisBuilder.setTimeout(jedisProperties.getTimeout());
+            jedisBuilder.setHost(redisConfig.getIp());
+            jedisBuilder.setPort(redisConfig.getPort());
+            jedisBuilder.setTimeout(redisConfig.getTimeout());
             jedis = jedisBuilder.build();
         } catch (Exception e) {
             e.printStackTrace();
